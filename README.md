@@ -29,6 +29,8 @@ API (routes) → Services (business logic) → Repositories (data access) → Po
 
 Each layer has a single responsibility, which keeps the code testable and easy to change.
 
+The database design (ERD and the reasoning behind it) is documented in [docs/DATABASE.md](docs/DATABASE.md).
+
 ## Getting started
 
 ### Prerequisites

@@ -42,7 +42,16 @@ Household Budget: personal finance + shared household budget web app. Goals: a s
 
 ## Data model
 
-See [docs/DATABASE.md](docs/DATABASE.md) for the ERD and the reasoning behind it.
+Full ERD and reasoning: [docs/DATABASE.md](docs/DATABASE.md). Key rules:
+
+- Ownership via two nullable FKs (`owner_user_id`, `household_id`) + `CHECK num_nonnulls(...) = 1` on accounts, categories, budgets.
+- Visibility rule lives in the repository layer: account visible if owned or in my household; transaction visible if its account is visible or its `household_id` is my household. Someone else's resource → 404, not 403.
+- Sharing a personal expense with a household is per transaction (`transactions.household_id`); account details are never exposed.
+- `amount > 0` always; direction from `type` (income, expense, transfer_in, transfer_out). A transfer is two rows linked by `transfer_group_id`.
+- Balance is calculated (`opening_balance` + transactions), not stored. Payer of a shared expense = owner of the personal account.
+- `settlements` is its own table. `occurred_on` is `DATE`; event times are `TIMESTAMPTZ`.
+- Enums are `VARCHAR` + `CHECK`, not native PG enums. Invitation tokens stored as hashes. Audit logs: no FK on `entity_id`, `details` JSONB.
+- Default categories are copied per user/household. MVP: no currency conversion.
 
 ## Local environment notes
 
