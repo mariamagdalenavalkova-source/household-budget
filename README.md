@@ -31,7 +31,31 @@ Each layer has a single responsibility, which keeps the code testable and easy t
 
 ## Getting started
 
-Setup instructions will be added as the project foundation is built.
+### Prerequisites
+
+- Docker Desktop
+- Git
+
+### Run locally
+
+1. Clone the repository.
+2. Copy the environment template and fill in real values:
+
+   ```
+   cp .env.example .env
+   ```
+
+   On Windows (Command Prompt): `copy .env.example .env`
+
+3. Start all services:
+
+   ```
+   docker compose up --build
+   ```
+
+4. Open in the browser:
+   - Health check: http://localhost:8000/health
+   - API documentation: http://localhost:8000/docs
 
 ## Roadmap
 
